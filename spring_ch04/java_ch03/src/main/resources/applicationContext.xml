@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="initSampleData" class="daelim.java_ch03.utils.InitSampleData" scope="prototype">
+        <property name="sNums">
+            <array>
+                <value>spring001</value>
+                <value>spring002</value>
+                <value>spring003</value>
+                <value>spring004</value>
+                <value>spring005</value>
+            </array>
+        </property>
+    </bean>
+    <bean id="studentDao" class="daelim.java_ch03.member.dao.StudentDao" >
+
+    </bean>
+    <bean id="studentService" class="daelim.java_ch03.member.service.StudentService" >
+        <constructor-arg ref="studentDao"/>
+    </bean>
+    <bean id="printStudentInformationService" class="daelim.java_ch03.member.service.PrintStudentInformationService" >
+        <constructor-arg ref="studentService"/>
+    </bean>
+
+    <!--개발용-->
+    <bean id="dev_DBConnectionInfo" class="daelim.java_ch03.member.DBConnectionInfo" />
+
+    <!--실서비스용-->
+    <bean id="real_DBConnectionInfo" class="daelim.java_ch03.member.DBConnectionInfo">
+        <property name="url" value="111.111.111.111"/>
+        <property name="userPw" value="master"/>
+        <property name="userId" value="1111"/>
+    </bean>
+    <bean id="eMSInformationService" class="daelim.java_ch03.member.service.EMSInformationService">
+        <property name="info">
+            <value>Education Management System program was developed in 2024</value>
+        </property>
+        <property name="ver" value="the version is 1.0"/>
+        <property name="sMonth" value="2024"/>
+        <property name="sDay" value="29"/>
+
+        <property name="eYear" value="2024" />
+        <property name="eMonth" value="4" />
+        <property name="eDay" value="30" />
+
+        <property name="developers">
+            <list>
+                <value>Dev01</value>
+                <value>Dev02</value>
+                <value>Dev03</value>
+                <value>Dev04</value>
+            </list>
+        </property>
+
+        <property name="administrators">
+            <map>
+                <entry>
+                    <key>
+                        <value>Dev01</value>
+                    </key>
+                    <value>dev01@test.com</value>
+                </entry>
+                <entry>
+                    <key>
+                        <value>Dev03</value>
+                    </key>
+                    <value>dev03@test.com</value>
+                </entry>
+            </map>
+        </property>
+
+        <property name="dbInfos">
+            <map>
+                <entry>
+                    <key>
+                        <value>dev</value>
+                    </key>
+                    <ref bean="dev_DBConnectionInfo" />
+                </entry>
+                <entry>
+                    <key>
+                        <value>real</value>
+                    </key>
+                    <ref bean="real_DBConnectionInfo" />
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+
+
+</beans>
